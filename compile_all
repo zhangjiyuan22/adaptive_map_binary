@@ -1,0 +1,8 @@
+#g++ -std=c++11 -fPIC -shared VBBinaryLensingLibrary.cpp ray_shooting.cpp -I/usr/include/python2.7/ -o genmap.so
+#g++ -fPIC -shared chi2.cpp -I/usr/include/python2.7/ -o chi2.so
+#g++ -std=c++11 -fPIC -shared VBBinaryLensingLibrary.cpp ray_shooting.cpp -I/home/renkun/.casa5/include/python2.7/ -o genmap.so
+#g++ -fPIC -shared chi2.cpp -I/home/renkun/.casa5/include/python2.7/ -o chi2.so
+#g++ -fPIC -shared chi2_calculator.cpp -I/home/renkun/.casa5/include/python2.7/ -o chi2_calculator.so
+g++ -fPIC -shared chi2_calculator.cpp -I/usr/include/python2.7/ -o chi2_calculator.so
+#g++ -fPIC -shared chi2_renkun.cpp -I/home/renkun/.casa5/include/python2.7/ -o chi2_renkun.so
+
