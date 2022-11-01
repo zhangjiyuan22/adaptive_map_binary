@@ -109,65 +109,6 @@ def generating_next_layer( current_layer , current_serial_number_sum , current_c
         
     return next_serial_number_sum , next_corner_mag_sum , current_whether_densed_sum , current_sequence_number_in_next_layer_file_sum , True
 """
-### the following is to draw the caustics###
-def getCaustic(separation,mass_ratio,npt=1000):
-    masses = np.array([1.,mass_ratio])
-    totalMass = sum(masses)
-    masses /= totalMass
-    nlens = len(masses)
-    offset = masses[1]*separation
-    zlens1 = np.complex(-offset,0.)
-    zlens2 = np.complex(separation-offset,0.)
-    zlenses = np.array([zlens1,zlens2])
-    ######
-    f0 = np.zeros(2*nlens+1)*1j
-    gc = np.zeros([nlens,2*nlens])*1j
-    fc = np.zeros([nlens,2*nlens])*1j
-    phis = np.linspace(0,2*np.pi,npt+1)[:npt]
-    zcauList,zcriList = [],[]
-    for phi in phis:
-        f0[0] = zlenses[0]**2
-        f0[1] = -2.*zlenses[0]
-        f0[2] = 1.
-        k = 1
-        for ilens in range(1,nlens):
-            k += 2
-            f0[k+1] = f0[k-1]
-            f0[k] = f0[k-2]-2.*f0[k-1]*zlenses[ilens]
-            for j in range(k-2,0,-1):
-                f0[j+1] = f0[j-1]-2.*f0[j]*zlenses[ilens]+f0[j+1]*zlenses[ilens]**2
-            f0[1] = -2.*f0[0]*zlenses[ilens]+f0[1]*zlenses[ilens]**2
-            f0[0] = f0[0]*zlenses[ilens]**2
-        for ilens in range(nlens):
-            gc[ilens,2*nlens-1] = f0[2*nlens]
-            for j in range(2*nlens,1,-1):
-                gc[ilens,j-2] = gc[ilens,j-1]*zlenses[ilens]+f0[j-1]
-            fc[ilens,2*nlens-2] = gc[ilens,2*nlens-1]
-            for j in range(2*nlens-1,1,-1):
-                fc[ilens,j-2] = fc[ilens,j-1]*zlenses[ilens]+gc[ilens,j-1]
-        hc = np.zeros(2*nlens+1)*1j
-        eiphi = np.exp(1j*phi)
-        hc[2*nlens] = f0[2*nlens]*eiphi
-        hc[2*nlens-1] = f0[2*nlens-1]*eiphi
-        for order in range(2*nlens-1,0,-1):
-            hc[order-1] = f0[order-1]*eiphi
-            secondTerm = 0.
-            for ilens in range(nlens):
-                secondTerm += masses[ilens]*fc[ilens,order-1]
-            hc[order-1] -= secondTerm
-        orders = 2*nlens+1
-        coeffs = np.zeros(orders)*1j
-        for ith in range(orders):
-            coeffs[ith] = hc[orders-ith-1]
-        zcri = np.roots(coeffs)
-        zcau = np.zeros_like(zcri)*1j
-        for eachRoot in range(len(zcri)):
-            zcau[eachRoot] = zcri[eachRoot]
-            for ilens in range(nlens):
-                zcau[eachRoot] -= masses[ilens]/(np.conj(zcri[eachRoot])-np.conj(zlenses[ilens]))
-        zcauList.extend(zcau)
-        zcriList.extend(zcri)
-    return np.array(zcauList),np.array(zcriList)
 
 if __name__ == '__main__':
 
