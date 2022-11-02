@@ -12,7 +12,7 @@ Adaptive Map Binary Grid Search 使用说明
 
   第15行处的box_size = ** ，每张map的大小是(2*box_size)*(2*box_size)，map的中心默认为binary的质心（也可以通过246/247行修改），
 目前同一次生成的一系列map还都是使用同样的box_size（后续会改进使得每张map的box_size自动选择），所以需要根据所选的log s、log q形成的caustic大小
-来确保map的大小能装下所有magnification anomaly的区域；一般可以选用0.4/1.0/3.5等值；map之外用single近似；
+来确保map的大小能装下所有magnification anomaly的区域；一般可以选用0.4/1.0/3.5等值；map之外用假设位于map中心的single近似放大倍数（s和q均较大时需要考虑到map的长度单位归一化到binary总质量的Einstein半径，而此时作为single的Einstein半径是binary中一个质量对应的，所以需要进行转换）；
   
   第234行处的if current_layer == ** : ，这里输入的数字代表map被加密到第**层之后强行停止加密；判断是否加密的标准是放大倍数的插值误差小于 
                                                   0.01*sqrt(μ) ,
