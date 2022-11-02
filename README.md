@@ -1,5 +1,6 @@
 Adaptive Map Binary Grid Search 使用说明
-（word版本的使用说明也在）
+
+（word版本的使用说明也在项目中）
 
   总共有三个文件，包括生成map时使用的adaptive_map_generator.py，以及利用map做grid search时的chi2_calculator.cpp和binary_grid_ob16****.py，
 另外还需要一个compile_all来编译chi2_calculator.cpp；此外还有一些测试用代码；
