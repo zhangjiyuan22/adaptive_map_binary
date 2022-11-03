@@ -125,7 +125,7 @@ def grid(n):
     #shift_c[1] = shift_y
     #nalpha = 1
     #alphalist = [315.]
-    nalpha = 8
+    nalpha = 16
     alphalist = np.linspace(0,360.0-360.0/nalpha,nalpha)
     allparm = []
     allchi2 = []
