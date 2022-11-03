@@ -42,13 +42,24 @@ def getCaustic(separation,mass_ratio,npt=1000):
 
 if __name__ == '__main__':
 
-    mapdir = "map_set_ob161195_test/"
+    path = "/work/zhangjiyuan/adaptive_map_binary_github/"
+    mapdir = "ob161195_test"
+    
     mapname = "0"
     
-    logs = -0.005
-    logq = -4.25
     
-    map_content = np.load(mapdir+"%s.npz"%mapname,allow_pickle=True)
+    map_index = int(mapname)
+    map_parms = np.load(path+'parms_'+mapdir+'.npy')
+    
+    logs = map_parms[map_index][0]
+    logq = map_parms[map_index][1]
+    logrho = map_parms[map_index][2]
+    print('log s = %s'%logs)
+    print('log q = %s'%logq)
+    print('log rho = %s'%logrho)
+
+    
+    map_content = np.load(path+'map_set_'+mapdir+"/%s.npz"%mapname,allow_pickle=True)
     all_layer_serial_number_raw = map_content['all_layer_serial_number']
     all_layer_corner_mag_raw = map_content['all_layer_corner_mag']
     all_layer_whether_densed_raw = map_content['all_layer_whether_densed']
@@ -139,7 +150,10 @@ if __name__ == '__main__':
     ax.plot( np.real(zcauList_part4) , np.imag(zcauList_part4)  ,color = 'blue')
 
     plt.axis('equal')
+    plt.title('logs=%s, logq=%s, logrho=%s'%(logs,logq,logrho))
     plt.show()
         
+        
 
+    
 
