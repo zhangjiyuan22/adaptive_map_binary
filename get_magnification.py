@@ -6,18 +6,33 @@ import time
 import multiprocessing as mp
 import emcee
 #from mpi4py import MPI
+from MulensModel.binarylens import BinaryLens
 from PyAstronomy import pyasl
 Chi2Lib = ctypes.cdll.LoadLibrary('./chi2_calculator.so')
 
-x = -0.001
+x = -0.0112
 y = 0.
 
 if __name__ == '__main__':
 
-    mapdir = "map_set_ob161195_test/"
+    mapdir = "ob161195_test"
     mapname = "0"
+    
+    map_index = int(mapname)
+    #print(map_index)
 
-    map_content = np.load(mapdir+"%s.npz"%mapname,allow_pickle=True)
+    print('(x,y) = (%s,%s)'%(x,y))
+    map_parms = np.load('parms_'+mapdir+'.npy') 
+    #print(map_parms[0])
+    
+    print('log s = %s'%map_parms[map_index][0])
+    print('log q = %s'%map_parms[map_index][1])
+    print('log rho = %s'%map_parms[map_index][2])
+    s = 10**(map_parms[map_index][0])
+    q = 10**(map_parms[map_index][1])
+    rho = 10**(map_parms[map_index][2])
+
+    map_content = np.load('map_set_'+mapdir+"/%s.npz"%mapname,allow_pickle=True)
     all_layer_corner_mag_raw = map_content['all_layer_corner_mag']
     all_layer_whether_densed_raw = map_content['all_layer_whether_densed']
     all_layer_sequence_number_in_next_layer_file_raw = map_content['all_layer_sequence_number_in_next_layer_file']
@@ -75,11 +90,14 @@ if __name__ == '__main__':
     Chi2Lib.wrapinterpolating_to_get_magnification.argtypes = [ctypes.c_float,ctypes.c_float,ctypes.POINTER(ctypes.c_float),ctypes.POINTER(ctypes.c_bool),ctypes.POINTER(ctypes.c_int),ctypes.POINTER(ctypes.c_int),ctypes.c_float,ctypes.POINTER(ctypes.c_float)]
     Chi2Lib.wrapinterpolating_to_get_magnification(x,y,all_layer_corner_mag,all_layer_whether_densed,all_layer_sequence_number_in_next_layer_file,layer_length_accumulated_in_front_of_each_layer,box_size_final,ip)
 
-    print(iA)
+    print('A_interpolation = %s'%iA.value)
 
+    bilens = BinaryLens(mass_1=1/(1.0+q), mass_2=q/(1.0 + q), separation=s)
+    A_vbbl = bilens.vbbl_magnification( x , y , rho, u_limb_darkening=None, accuracy=1e-3)
+    print('A_vbbl = %s'%A_vbbl)
 
-
-
+    print('absolute error = %s'%(np.abs(iA.value-A_vbbl)))
+    print('absolute error threshold = 0.01*sqrt(A) = %s'%(0.01*(A_vbbl**0.5)))
 
 
 
