@@ -72,13 +72,19 @@
 
 #### 然后可以python3 draw_grid_search_result.py画图分析grid search的结果（需修改其12/13/15/16/137-140行）
 
-
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 
 # 另外，还有一些测试用的代码：
 
-
+<br>
+<br>
+<br>
 
 ## 利用map插值得到放大倍数：
 
@@ -90,7 +96,9 @@
 
 #### 然后直接python3 get_magnification.py即可运行
 
-
+<br>
+<br>
+<br>
 
 ## 将生成好的map可视化：
 
