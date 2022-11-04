@@ -68,9 +68,9 @@
   
   第323行设置grid search结果存储位置及名称；
 
-然后直接python3 binary_grid_ob16****.py即可运行
+#### 然后直接python3 binary_grid_ob16****.py即可运行
 
-然后可以python3 draw_grid_search_result.py画图分析grid search的结果（需修改其12/13/15/16/137-140行）
+#### 然后可以python3 draw_grid_search_result.py画图分析grid search的结果（需修改其12/13/15/16/137-140行）
 
 
 
