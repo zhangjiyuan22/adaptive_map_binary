@@ -1,10 +1,10 @@
 Adaptive Map Binary Grid Search 使用说明
 
-（word版本的使用说明也在项目中）
+
 
   总共有三个文件，包括生成map时使用的adaptive_map_generator.py，以及利用map做grid search时的chi2_calculator.cpp和binary_grid_ob16****.py，
 另外还需要一个compile_all来编译chi2_calculator.cpp；此外还有一些测试用代码；
-
+  另外还在项目中放了一个非常小的 map set（180张）以及一个事件的数据（ob161195），其grid search结果也已经放到result目录下，供测试用；
 
 
 生成map：
@@ -50,8 +50,9 @@ chi2_calculator.cpp在正常使用中无需修改，也无需重复编译，只�
   
   第323行设置grid search结果存储位置及名称；
 
-然后直接python3 binary_grid_kb21****_new.py即可运行
+然后直接python3 binary_grid_ob16****.py即可运行
 
+然后可以python3 draw_grid_search_result.py画图分析grid search的结果
 
 
 
@@ -65,9 +66,9 @@ chi2_calculator.cpp在正常使用中无需修改，也无需重复编译，只�
 
 在get_magnification.py中修改：
   
-  第17/18行处设置使用哪张map进行插值；
+  第18/19行处设置使用哪张map进行插值；
 
-  第12/13行处设置希望得到哪个(x,y)点的放大倍数；
+  第13/14行处设置希望得到哪个(x,y)点的放大倍数；
 
 然后直接python3 get_magnification.py即可运行
 
@@ -77,9 +78,7 @@ chi2_calculator.cpp在正常使用中无需修改，也无需重复编译，只�
 
 在visualizing_adaptive_map.py 中修改：
   
-  第45/46行处设置要可视化哪张map ；
-
-  第48/49行处设置这张map对应的log s和log q ；
+  第45/46/48行处设置要可视化哪张map ；
 
 然后直接python3 visualizing_adaptive_map.py即可运行
 
