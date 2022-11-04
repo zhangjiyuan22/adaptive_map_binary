@@ -82,23 +82,23 @@
 
 ## 利用map插值得到放大倍数：
 
-在get_magnification.py中修改：
+#### 在get_magnification.py中修改：
   
   第18/19行处设置使用哪张map进行插值；
 
   第13/14行处设置希望得到哪个(x,y)点的放大倍数；
 
-然后直接python3 get_magnification.py即可运行
+#### 然后直接python3 get_magnification.py即可运行
 
 
 
 ## 将生成好的map可视化：
 
-在visualizing_adaptive_map.py 中修改：
+#### 在visualizing_adaptive_map.py 中修改：
   
   第45/46/48行处设置要可视化哪张map ；
 
-然后直接python3 visualizing_adaptive_map.py即可运行
+#### 然后直接python3 visualizing_adaptive_map.py即可运行
 
 
 
