@@ -279,10 +279,10 @@ def generating_a_map(arg):
     all_layer_corner_mag_array = np.array(np.float32(all_layer_corner_mag))
     #all_layer_corner_mag_array = np.array(all_layer_corner_mag)
     all_layer_whether_densed_array = np.array(all_layer_whether_densed)
-    all_layer_sequence_number_in_next_layer_file_array = np.array(all_layer_sequence_number_in_next_layer_file)
+    all_layer_sequence_number_in_next_layer_file_array = np.array(np.int32(all_layer_sequence_number_in_next_layer_file))
     layer_length_array = np.array(layer_length)
 
-    np.savez('./map_set_%s/%s'%(map_set_name,arg),all_layer_serial_number=all_layer_serial_number_array , all_layer_corner_mag=all_layer_corner_mag_array , all_layer_whether_densed=all_layer_whether_densed_array , all_layer_sequence_number_in_next_layer_file=all_layer_sequence_number_in_next_layer_file_array , layer_length=layer_length_array , box_size=box_size_array)
+    np.savez('./map_set_%s/%s'%(map_set_name,arg), all_layer_corner_mag=all_layer_corner_mag_array , all_layer_whether_densed=all_layer_whether_densed_array , all_layer_sequence_number_in_next_layer_file=all_layer_sequence_number_in_next_layer_file_array , layer_length=layer_length_array , box_size=box_size_array)
     
 
 def saveparm():
