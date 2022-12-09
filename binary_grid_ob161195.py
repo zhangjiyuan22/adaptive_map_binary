@@ -8,6 +8,8 @@ import emcee
 #from mpi4py import MPI
 from PyAstronomy import pyasl
 Chi2Lib = ctypes.cdll.LoadLibrary('./chi2_calculator.so')
+import h5py
+
 
 map_set_name = 'ob161195_test'
 
@@ -61,12 +63,31 @@ def grid(n):
     global use_mcmc
     #mapdir = "./map_set_kb220371_version2/"#test/"
     
-    map_content = np.load(mapdir+"%s.npz"%n,allow_pickle=True)
-    all_layer_corner_mag_raw = map_content['all_layer_corner_mag']
-    all_layer_whether_densed_raw = map_content['all_layer_whether_densed']
-    all_layer_sequence_number_in_next_layer_file_raw = map_content['all_layer_sequence_number_in_next_layer_file']
-    layer_length_raw = map_content['layer_length']
-    box_size = map_content['box_size'][0]
+    #map_content = np.load(mapdir+"%s.npz"%n,allow_pickle=True)
+    #all_layer_corner_mag_raw = map_content['all_layer_corner_mag']
+    #all_layer_whether_densed_raw = map_content['all_layer_whether_densed']
+    #all_layer_sequence_number_in_next_layer_file_raw = map_content['all_layer_sequence_number_in_next_layer_file']
+    #layer_length_raw = map_content['layer_length']
+    #box_size = map_content['box_size'][0]
+
+    f = h5py.File(mapdir+"%s.hdf5"%n, "r")
+
+    dset1 = f['all_layer_corner_mag']
+    all_layer_corner_mag_raw = dset1[...]
+
+    dset2 = f['all_layer_whether_densed']
+    all_layer_whether_densed_raw = dset2[...]
+
+    dset3 = f['all_layer_sequence_number_in_next_layer_file']
+    all_layer_sequence_number_in_next_layer_file_raw = dset3[...]
+
+    dset4 = f['layer_length']
+    layer_length_raw = dset4[...]
+
+    dset5 = f['box_size']
+    box_size = dset5[...][0]
+    
+    
     
     nlayer = len(layer_length_raw)
 
@@ -257,7 +278,8 @@ if __name__ == '__main__':
     for i,pi in enumerate(parms):
         ilogs,ilogq,ilogrho = pi
         try:
-            f = np.load(mapdir+"%s.npz"%i,allow_pickle=True)
+            #f = np.load(mapdir+"%s.npz"%i,allow_pickle=True)
+            f = h5py.File(mapdir+"%s.hdf5"%i, "r")
             #f.close()
             if select(ilogs,ilogq,ilogrho): # == True:
                 args.append(i)
