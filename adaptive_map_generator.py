@@ -9,6 +9,9 @@ import time
 import sys
 import ctypes
 
+import h5py
+
+
 #s = 0.93#0.8
 #q = 1.2e-4#0.1
 #rho = 1e-2
@@ -105,7 +108,8 @@ def generating_next_layer( current_layer , current_serial_number_sum , current_c
             current_sequence_number_in_next_layer_file_sum.append( current_sequence_number_in_next_layer_file )
             current_sequence_number_in_next_layer_file += 1
         else :
-            current_sequence_number_in_next_layer_file_sum.append( None )
+            current_sequence_number_in_next_layer_file_sum.append( 1000000 )
+            #current_sequence_number_in_next_layer_file_sum.append( None )
         
     return next_serial_number_sum , next_corner_mag_sum , current_whether_densed_sum , current_sequence_number_in_next_layer_file_sum , True
 """
@@ -236,7 +240,8 @@ def generating_a_map(arg):
             current_sequence_number_in_next_layer_file_sum_final = []
             for i in range(len(current_serial_number_sum)):
                 current_whether_densed_sum_final.append(False)
-                current_sequence_number_in_next_layer_file_sum_final.append(None)
+                #current_sequence_number_in_next_layer_file_sum_final.append(None)
+                current_sequence_number_in_next_layer_file_sum_final.append(1000000)
             all_layer_whether_densed.extend(current_whether_densed_sum_final)
             all_layer_sequence_number_in_next_layer_file.extend(current_sequence_number_in_next_layer_file_sum_final)
 
@@ -279,10 +284,24 @@ def generating_a_map(arg):
     all_layer_corner_mag_array = np.array(np.float32(all_layer_corner_mag))
     #all_layer_corner_mag_array = np.array(all_layer_corner_mag)
     all_layer_whether_densed_array = np.array(all_layer_whether_densed)
-    all_layer_sequence_number_in_next_layer_file_array = np.array(np.int32(all_layer_sequence_number_in_next_layer_file))
+    all_layer_sequence_number_in_next_layer_file_array = np.array(int32(all_layer_sequence_number_in_next_layer_file))
     layer_length_array = np.array(layer_length)
+    
+    
+    
+    f = h5py.File("./map_set_%s/%s.hdf5"%(map_set_name,arg), "w")
 
-    np.savez('./map_set_%s/%s'%(map_set_name,arg), all_layer_corner_mag=all_layer_corner_mag_array , all_layer_whether_densed=all_layer_whether_densed_array , all_layer_sequence_number_in_next_layer_file=all_layer_sequence_number_in_next_layer_file_array , layer_length=layer_length_array , box_size=box_size_array)
+    dataset1 = f.create_dataset("all_layer_corner_mag", data = all_layer_corner_mag_array)
+    
+    dataset2 = f.create_dataset("all_layer_whether_densed", data = all_layer_whether_densed_array)
+    
+    dataset3 = f.create_dataset("all_layer_sequence_number_in_next_layer_file", data = all_layer_sequence_number_in_next_layer_file_array)
+    
+    dataset4 = f.create_dataset("layer_length", data = layer_length_array)
+    
+    dataset5 = f.create_dataset("box_size", data = box_size_array)
+    
+    #np.savez('./map_set_%s/%s'%(map_set_name,arg), all_layer_corner_mag=all_layer_corner_mag_array , all_layer_whether_densed=all_layer_whether_densed_array , all_layer_sequence_number_in_next_layer_file=all_layer_sequence_number_in_next_layer_file_array , layer_length=layer_length_array , box_size=box_size_array)
     
 
 def saveparm():
